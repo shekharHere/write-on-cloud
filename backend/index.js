@@ -6,7 +6,9 @@ connectToMongo();
 const app = express()
 const port = 5000
 
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json()); // this is a middleware used to access req body of any request
 
 // app.get('/', (req, res) => {
