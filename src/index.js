@@ -9,11 +9,11 @@ root.render(
   <React.StrictMode>
     <App />
     <script>
-        {
-          window.addEventListener('message', function(e) {
-            console.log('message',e);
-          })
-        }
+      {
+        window.addEventListener('message', function (e) {
+          console.log('message', e);
+        })
+      }
     </script>
   </React.StrictMode>
 );
