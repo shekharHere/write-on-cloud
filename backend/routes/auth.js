@@ -15,6 +15,8 @@ router.post('/createUser', [
     body('password').isLength({ mmin: 8 }) // must contain atleast 8 characters
 ] , async (req, res)=> {
 
+    let success = false;
+
     const errors = validationResult(req); // Find validation errors if any
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -26,7 +28,7 @@ router.post('/createUser', [
         // check whether user exists or not
         let userDetails = await User.findOne({email: req.body.email});
         if (userDetails) {
-            return res.status(400).json({error: "Sorry! User with same email already exists."})
+            return res.status(400).json({ success: success, error: "Sorry! User with same email already exists." })
         }
 
         // Creating hash code to secure password
@@ -46,7 +48,9 @@ router.post('/createUser', [
             }
         }
         const authToken = jwt.sign(data, jwt_secret);
+        success = true;
         res.json({
+            success: success,
             auth_token: authToken
         });
 
@@ -65,6 +69,8 @@ router.post('/login', [
     body('password').not().isEmpty()
 ] , async (req, res)=> {
 
+    let success = false;
+
     const errors = validationResult(req); // Find validation errors if any
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -77,11 +83,13 @@ router.post('/login', [
     try {
         let user = await User.findOne({email});
         if (!user) {
+            success = false;
             return res.status(400).json({error: "Please enter correct login credentials!"})
         }
 
         const passCompare = await bcrypt.compare( password, user.password );
         if (!passCompare) {
+            success = false;
             return res.status(400).json({error: "Please enter correct login credentials!"})
         }
 
@@ -91,8 +99,10 @@ router.post('/login', [
             }
         }
         const authToken = jwt.sign(data, jwt_secret);
+        success = true;
         res.json({
-            auth_token: authToken
+            success,
+            authToken
         });
     } catch (error) {
         // handle any error while API callout
