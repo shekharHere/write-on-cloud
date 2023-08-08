@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/createUser', [
     body('name').isLength({ min: 3 }), // must contain atleast 3 characters
     body('email', 'Enter a valid email.').isEmail(), // must be an email -- 2nd param is used to give customized error msg
-    body('password').isLength({ mmin: 8 }) // must contain atleast 8 characters
+    body('password').isLength({ min: 8 }) // must contain atleast 8 characters
 ] , async (req, res)=> {
 
     let success = false;
@@ -51,7 +51,7 @@ router.post('/createUser', [
         success = true;
         res.json({
             success: success,
-            auth_token: authToken
+            authToken: authToken
         });
 
     } catch (error) {
