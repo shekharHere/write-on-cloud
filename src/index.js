@@ -11,7 +11,7 @@ root.render(
     <script>
       {
         window.addEventListener('message', function (e) {
-          console.log('message', e);
+          console.log('message', e.data);
         })
       }
     </script>
