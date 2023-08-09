@@ -18,7 +18,7 @@ const NoteState = (props) => {
         })
 
         const json = await response.json()
-        console.log(json);
+        // console.log(json);
         setNotes(json);
     }
 
@@ -36,8 +36,6 @@ const NoteState = (props) => {
 
         const json = await response.json()
         console.log(json);
-        console.log("token -", localStorage.getItem('token'));
-        console.log(localStorage.getItem('oneMore'));
 
         setNotes(notes.concat(json));
     }

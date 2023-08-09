@@ -12,25 +12,6 @@ import {
 } from "react-router-dom";
 
 function App() {
-
-  const displayMessage = (evt) => {
-    var message;
-    if (evt.origin !== "https://robertnyman.com") {
-      message = "You are not worthy";
-    }
-    else {
-      message = "I got " + evt.data + " from " + evt.origin;
-    }
-    document.getElementById("received-message").innerHTML = message;
-  }
-
-  if (window.addEventListener) {
-    // For standards-compliant web browsers
-    window.addEventListener("message", displayMessage, false);
-  } else {
-    window.attachEvent("onmessage", displayMessage);
-  }
-
   return (
     <>
       <NoteState>
